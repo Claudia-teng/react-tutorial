@@ -1,0 +1,16 @@
+.card {
+  border-radius: 10px;
+  background: #fff;
+  padding: 3rem;
+  width: 30%;
+  margin: 0 auto;
+}
+
+.image {
+  width: 5rem;
+  height: 5rem;
+}
+
+.forecast {
+  margin-top: 5rem;
+}
