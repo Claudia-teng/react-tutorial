@@ -1,16 +1,14 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import './App.css'
 import Index from './pages/Index/Index'
-import Weather from './pages/Weather/Weather'
-import Culture from './pages/Culture/Culture'
+import CheckList from './pages/CheckList/CheckList'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Index />} />
-        <Route path='/weather' element={<Weather />} />
-        <Route path='/culture' element={<Culture />} />
+        <Route path='/checklist' element={<CheckList />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,8 +1,8 @@
 import axios from 'axios'
-export const weatherApi = {
-  getWeatherDetail: async () => {
+export const checkListApi = {
+  getCheckList: async () => {
     try {
-      const response = await axios.get('https://goweather.herokuapp.com/weather/taipei')
+      const response = await axios.get('https://64acea589edb4181202ff208.mockapi.io/expenses')
       return response.data
     } catch (error) {
       console.error(error)
