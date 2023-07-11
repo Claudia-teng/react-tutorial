@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styles from './GoalInput.module.css'
+// import styles from './GoalInput.module.css'
+import './GoalInput.css'
 
 function GoalInput() {
   return (
