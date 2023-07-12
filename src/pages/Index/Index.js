@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import styles from './Index.module.sass'
 
 function Index() {
   let navigate = useNavigate()
@@ -8,10 +9,12 @@ function Index() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>- React Tutorial -</h1>
       <div>
-        <button onClick={() => navigateTo('counter')}>Counter</button>
+        <button className={styles.button} onClick={() => navigateTo('counter')}>
+          Counter
+        </button>
       </div>
     </div>
   )
