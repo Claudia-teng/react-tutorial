@@ -12,3 +12,8 @@ function Product() {
 }
 
 export default Product
+
+// loading
+{
+  /* <div className={styles.ldsRipple}><div></div><div></div></div> */
+}
