@@ -1,14 +1,14 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
-import './App.css'
+import './App.sass'
 import Index from './pages/Index/Index'
-import CheckList from './pages/CheckList/CheckList'
+import Product from './pages/Product/Product'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Index />} />
-        <Route path='/checklist' element={<CheckList />} />
+        <Route path='/product' element={<Product />} />
       </Routes>
     </BrowserRouter>
   )
