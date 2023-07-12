@@ -1,18 +1,28 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import styles from './Product.module.sass'
-import CheckListItem from '../../components/Product/Product'
+import ProductItem from '../../components/ProductItem/ProductItem'
+import { productApi } from '../../api/productApi'
 
-function CheckList() {
+function Product() {
+  const [productList, setProductList] = useState([])
+
   useEffect(() => {
-    // call api
+    async function getProductList() {
+      const response = await productApi.getProductList()
+      setProductList(response)
+    }
+
+    getProductList()
   }, [])
 
   return (
-    <>
-      <div></div>
-    </>
+    <div className={styles.container}>
+      {productList.map((product) => {
+        return <ProductItem product={product} key={product.id} />
+      })}
+    </div>
   )
 }
 
-export default CheckList
+export default Product

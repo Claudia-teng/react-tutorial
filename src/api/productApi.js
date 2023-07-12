@@ -1,6 +1,6 @@
 import axios from 'axios'
-export const checkListApi = {
-  getCheckList: async () => {
+export const productApi = {
+  getProductList: async () => {
     try {
       const response = await axios.get('https://fakestoreapi.com/products')
       return response.data
