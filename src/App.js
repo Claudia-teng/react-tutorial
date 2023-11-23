@@ -6,6 +6,7 @@ const DOMAIN = 'http://localhost:8000'
 function App() {
   const [sockets, setSockets] = useState({})
   const [receivedCount, setReceivedCount] = useState({})
+  const roomId = 'ba2be0a1-35b9-4255-a8df-de442c484d1c'
 
   async function sendTask() {
     for (const lessonId in sockets) {
@@ -18,32 +19,35 @@ function App() {
       }
       socket.emit('create_task', data)
     }
+
+    console.log('socket emit success')
   }
 
   useEffect(() => {
-    // build lesson count object
-    let lessonIds = ['182a7c97-f44c-45c0-b06e-5a6da69c3619', 'c9924558-e62f-4383-866a-72afcaea6f3d', '3d46f73b-cbde-4113-93f7-c924086e83a8']
-    setReceivedCount(() => {
-      let map = {}
-      for (let lessonId of lessonIds) {
-        map[lessonId] = 0
-      }
-      return map
-    })
-
     async function getToken() {
       const tokenResponse = await axios.post(`${DOMAIN}/api/v1/token`)
       const access_token = tokenResponse.data.access_token
       return access_token
     }
 
-    // connect sockets
     async function connectSocket() {
+      // build lesson count object
+      const response = await axios.get(`${DOMAIN}/api/v1/lessons/all/${roomId}`)
+      const lessonIds = response.data
+
+      setReceivedCount(() => {
+        let map = {}
+        for (let lessonId of lessonIds) {
+          map[lessonId] = 0
+        }
+        return map
+      })
+
+      // connect sockets
       const newSockets = {}
       for (let i = 0; i < lessonIds.length; i++) {
         const lessonId = lessonIds[i]
         const access_token = await getToken()
-        console.log('access_token', access_token)
         const socket = io(`${DOMAIN}/classroom`, {
           auth: {
             access_token: access_token
@@ -52,13 +56,12 @@ function App() {
           path: '/sockets',
           query: {
             role: 'teacher',
-            room_id: 'ba2be0a1-35b9-4255-a8df-de442c484d1c',
+            room_id: roomId,
             lesson_id: lessonId
           }
         })
 
         socket.on('task_response', (data) => {
-          console.log('data', data)
           let lessonId = data.lesson_id
           setReceivedCount((prev) => {
             return {
@@ -71,6 +74,7 @@ function App() {
         newSockets[lessonId] = socket
       }
       console.log('newSockets', newSockets)
+      console.log('socket connect success')
       setSockets(newSockets)
     }
     connectSocket()
@@ -78,7 +82,7 @@ function App() {
 
   return (
     <div className='App'>
-      <button onClick={sendTask}>Connect + Send Task</button>
+      <button onClick={sendTask}>Send Task</button>
       {Object.keys(receivedCount).map((lessonId, index) => (
         <p key={index}>
           {index + 1}. {lessonId}: {receivedCount[lessonId]}
